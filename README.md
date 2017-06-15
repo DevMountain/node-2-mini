@@ -16,7 +16,7 @@ In this step, we will create a package.json to keep track of our server's packag
 
 ### Solution
 
-<b>insert giphy here</b>
+<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/1g.gif" />
 
 ## Step 2
 
