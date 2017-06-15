@@ -28,7 +28,8 @@ module.exports = {
 
   delete: ( req, res ) => {
     const deleteID = req.params.id;
-    books = books.filter( book => book.id != deleteID );
+    bookID = books.findIndex( book => book.id == deleteID );
+    books.splice( bookID, 1 );
     res.status(200).send( books );
   }
 };
