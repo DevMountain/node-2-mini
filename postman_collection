@@ -1,0 +1,262 @@
+{
+	"id": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+	"name": "node_introduction",
+	"description": "node_introduction Unit Tests",
+	"order": [
+		"c51591ab-b243-cb4e-bb8e-15685fb38ce6",
+		"bc149d30-ee24-e42a-d9ba-04e377146efc",
+		"35447ce6-349d-d383-f3da-8586eaba18db",
+		"3f4dfd25-f0dc-c45d-70af-06f189a123dd",
+		"b7fa1542-6804-1d88-5967-41de1301fffc",
+		"8ce50b63-f751-598d-c262-4e40cd5a3586",
+		"29483a72-ff0f-fc68-ec42-5135237fe697",
+		"f90a934e-2aba-4b29-14e6-4c578e1db765"
+	],
+	"folders": [],
+	"timestamp": 1497539772856,
+	"owner": "851632",
+	"public": false,
+	"requests": [
+		{
+			"id": "29483a72-ff0f-fc68-ec42-5135237fe697",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books/1",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1497541972286,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": ""
+		},
+		{
+			"id": "35447ce6-349d-d383-f3da-8586eaba18db",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "const res = JSON.parse( responseBody );\nconst title1 = ( res[0].title === \"Book 0\" );\nconst author1 = ( res[0].author === \"Author 0\");\nconst resLength = ( res.length === 3 );\n\ntests[\" API can add new books to the collection \"] = title1 && author1 && resLength;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497542597982,
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"responses": [],
+			"rawModeData": "{\n\t\"title\": \"Book 2\",\n\t\"author\": \"Author 2\"\n}"
+		},
+		{
+			"id": "3f4dfd25-f0dc-c45d-70af-06f189a123dd",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "const res = JSON.parse( responseBody );\nconst isArray = Array.isArray( res );\nconst resLength = ( res.length === 3 );\n\ntests[\" API returns array of books in collection \" ] = isArray && resLength;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497542139884,
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"responses": [],
+			"rawModeData": ""
+		},
+		{
+			"id": "8ce50b63-f751-598d-c262-4e40cd5a3586",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books/0",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "DELETE",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1497540327980,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": ""
+		},
+		{
+			"id": "b7fa1542-6804-1d88-5967-41de1301fffc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books/0",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "const res = JSON.parse( responseBody );\nconst book = res[ 0 ];\n\nconst titleUpdated = ( book.title === \"Updated\" );\nconst authorUpdated = ( book.author === \"Updated\" );\n\ntests[\" API can update title and author of book \"] = titleUpdated && authorUpdated;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497542115722,
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"responses": [],
+			"rawModeData": "{\n\t\"title\": \"Updated\",\n\t\"author\": \"Updated\"\n}"
+		},
+		{
+			"id": "bc149d30-ee24-e42a-d9ba-04e377146efc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1497541529774,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"title\": \"Book 1\",\n\t\"author\": \"Author 1\"\n}"
+		},
+		{
+			"id": "c51591ab-b243-cb4e-bb8e-15685fb38ce6",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497541516835,
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"responses": [],
+			"rawModeData": "{\n\t\"title\": \"Book 0\",\n\t\"author\": \"Author 0\"\n}"
+		},
+		{
+			"id": "f90a934e-2aba-4b29-14e6-4c578e1db765",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:3000/api/books/2",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [],
+			"dataMode": "raw",
+			"tests": "const res = JSON.parse( responseBody );\nconst isEmpty = ( res.length === 0 );\n\ntests[\" API can delete books from the collection \"] = isEmpty;",
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1497542277697,
+			"name": "http://localhost:3000/api/books",
+			"description": "",
+			"collectionId": "e8e75d92-6b41-4f15-3670-4955f7f6f81f",
+			"responses": [],
+			"rawModeData": ""
+		}
+	]
+}
