@@ -30,7 +30,7 @@ In this step, we will install the most common packages you'll use when making a 
 
 ### Solution
 
-<b> insert giphy here </b>
+<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/2g.gif" />
 
 ## Step 3
 
@@ -206,7 +206,7 @@ app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 
 </details>
 
-<b> insert giphy here </b>
+<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/3g.gif" />
 
 ## Step 7
 
@@ -225,7 +225,7 @@ In this step, we will use Postman Unit Tests to test our endpoints.
 
 ### Solution
 
-<b> insert giphy here </b>
+<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/4g.gif" />
 
 ## Step 8
 
@@ -269,7 +269,7 @@ app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 
 <br />
 
-<b> insert giphy here </b>
+<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/5g.gif" />
 
 ## Contributions
 
