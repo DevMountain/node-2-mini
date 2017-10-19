@@ -2,7 +2,7 @@
 
 # Project Summary
 
-In this project, we will create a node server that will act as a bookshelf. This server will keep track of books by being able to add books to a collect, read from the collection, update the collection, and delete from the collection. We'll use postman to test our endpoints.
+In this project, we will create a node server that will act as a bookshelf. This server will keep track of books by being able to add books to a collection, read from the collection, update the collection, and delete from the collection. We'll use postman to test our endpoints.
 
 ## Step 1
 
@@ -59,6 +59,7 @@ In this step, we will create our server and have it listen on port `3000`.
 
 ### Instructions
 
+* In the root of the directory create a folder called `server`.
 * Create an `index.js` file in `server/`.
 * Open `server/index.js`.
 * Require `express` in a variable called `express` and require `body-parser` in a variable called `bodyParser`.
@@ -104,7 +105,7 @@ In this step, we will create a controller that keeps track of the book collectio
 * Create a variable called `id` that equals `0`.
   * After a creation of a book, we will increment this by `1` to insure no books have the same `id`.
 * Use `module.exports` to export an object.
-* On the object created a method called `create`, `read`, `update`, and `delete`.
+* On the object create a method called `create`, another called `read`, another called `update`, and another called `delete`.
   * Create - This method should be able to add a new book to the collection using the `request body`.
   * Read - This method should return all books in the collection.
   * Update - This method should be able to update a book by an id from the `request query parameters`.
@@ -163,7 +164,7 @@ module.exports = {
 
 ### Summary
 
-In this step, we will import our controller into `server/index.js` and create a routes that use the methods on the controller.
+In this step, we will import our controller into `server/index.js` and create routes that use the methods on the controller.
 
 When creating a route you can use the `post`, `get`, `put`, and `delete` methods on app. The first argument is the URL of the request and the second argument is what function to execute when that URL is hit.
 
@@ -172,7 +173,7 @@ We will also fire up the server to make sure everything has been corrected corre
 ### Instructions
 
 * Open `server/index.js`.
-* Require the books controller under the router.
+* Require the books controller under the router in a variable called `bc`.
 * Above `port` create four routes on `app`:
   * `post` - `/api/books`, `bc.create`.
   * `get` - `/api/books`, `bc.read`.
