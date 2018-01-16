@@ -4,6 +4,11 @@
 
 In this project, we will create a node server that will act as a bookshelf. This server will keep track of books by being able to add books to a collection, read from the collection, update the collection, and delete from the collection. We'll use postman to test our endpoints.
 
+## Setup
+
+* `Fork` this repository.
+* `Clone` your `fork`.
+
 ## Step 1
 
 ### Summary
