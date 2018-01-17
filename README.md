@@ -21,7 +21,7 @@ In this step, we will create a package.json to keep track of our server's packag
 
 ### Solution
 
-<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/1g.gif" />
+<img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/1g.gif" />
 
 ## Step 2
 
@@ -35,7 +35,7 @@ In this step, we will install the most common packages you'll use when making a 
 
 ### Solution
 
-<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/2g.gif" />
+<img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/2g.gif" />
 
 ## Step 3
 
@@ -213,7 +213,7 @@ app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 
 </details>
 
-<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/3g.gif" />
+<img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/3g.gif" />
 
 ## Step 7
 
@@ -232,7 +232,7 @@ In this step, we will use Postman Unit Tests to test our endpoints.
 
 ### Solution
 
-<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/4g.gif" />
+<img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/4g.gif" />
 
 ## Step 8
 
@@ -276,7 +276,7 @@ app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 
 <br />
 
-<img src="https://github.com/DevMountain/node-introduction/blob/solution/readme-assets/5g.gif" />
+<img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/5g.gif" />
 
 ## Contributions
 
