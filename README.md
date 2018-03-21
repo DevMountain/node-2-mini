@@ -111,7 +111,7 @@ In this step, we will create a controller that keeps track of the book collectio
   * After a creation of a book, we will increment this by `1` to insure no books have the same `id`.
 * Use `module.exports` to export an object.
 * Open `server/index.js`.
-* Require the books controller under the router in a variable called `bc`.
+* Require the books controller at the top of `server/index.js` in a variable called `bc`.
 
 ### Solution
 
