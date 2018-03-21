@@ -98,7 +98,7 @@ app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 
 ### Summary
 
-In this step, we will create a controller that keeps track of the book collection and has methods that can create books, read books, update books, and delete books.
+In this step, we will create a controller that keeps track of the book collection and import that controller into `server/index.js`. 
 
 ### Instructions
 
@@ -106,16 +106,54 @@ In this step, we will create a controller that keeps track of the book collectio
 * In `server/controllers/` create a file called `books_controller.js`.
 * Open `server/controllers/books_controller.js`.
 * Create a variable called `books` that equals an empty array.
-  * A book will be an object that has an `id`, `title`, and `author` property.
+  * The `books` variable will keep track of all our books. A book will be an object that has an `id`, `title`, and `author` property.
 * Create a variable called `id` that equals `0`.
   * After a creation of a book, we will increment this by `1` to insure no books have the same `id`.
 * Use `module.exports` to export an object.
-* On the object create a method called `create`, another called `read`, another called `update`, and another called `delete`.
-  * Create - This method should be able to add a new book to the collection using the `request body`.
-  * Read - This method should return all books in the collection.
-  * Update - This method should be able to update a book by an id from the `request query parameters`.
-  * Delete - This method should be able to delete a book by an id from the `request query parameters`.
-* All methods should return the entire books array.
+* Open `server/index.js`.
+* Require the books controller under the router in a variable called `bc`.
+
+### Solution
+
+<details>
+<summary><code> server/controller/books_controller.js </code></summary>
+
+```js
+let books = [];
+let id = 0;
+
+module.exports = {
+
+};
+```
+</details>
+
+<details>
+<summary><code> server/index.js </code></summary>
+
+```js
+const bc = require('./controllers/books_controller.js');
+```
+</details>
+
+## Step 6
+
+### Summary
+
+In this step, we will create the endpoint to `get` all the books. We will also create the method in the `books_controller` to be used as the endpoint's handler function.
+
+When creating a `get` route, you can use the `get` method on the `app` object. The first argument is the URL of the request and the second argument is the function to execute when that URL is hit. We will be getting that function from the `books_controller`.
+
+### Instructions
+
+* Open `server/index.js`.
+* Below the top level middleware and above the listen method invocation, add a `get` endpoint.
+  * The URL path should be `/api/books`.
+  * The handler function will come from the `books_controller`, we will add it once we create it.
+* Open `server/controllers/books_controller.js`.
+* Create a method called `read` in the `module.exports` object.
+  * This method should return all the books.
+* Return to the `get` endpoint in `server/index.js` that we just wrote and add the `read` method as the second argument after the URL path.
 
 ### Solution
 
@@ -128,65 +166,12 @@ let books = [];
 let id = 0;
 
 module.exports = {
-  create: ( req, res ) => {
-    const { title, author } = req.body;
-    books.push( { id, title, author } );
-    id++;
-    res.status(200).send( books );
-  },
-
   read: ( req, res ) => {
-    res.status(200).send( books );
-  },
-
-  update: ( req, res ) => {
-    const updateID = req.params.id;
-    let index = books.findIndex( book => book.id == updateID );
-
-    books[ index ] = {
-      id: books[ index ].id,
-      title: req.body.title || books[ index ].title,
-      author: req.body.author || books[ index ].author
-    };
-
-    res.status(200).send( books );
-  },
-
-  delete: ( req, res ) => {
-    const deleteID = req.params.id;
-    bookID = books.findIndex( book => book.id == deleteID );
-    books.splice( bookID, 1 );
     res.status(200).send( books );
   }
 };
 ```
-
 </details>
-
-<br />
-
-## Step 6
-
-### Summary
-
-In this step, we will import our controller into `server/index.js` and create routes that use the methods on the controller.
-
-When creating a route you can use the `post`, `get`, `put`, and `delete` methods on app. The first argument is the URL of the request and the second argument is what function to execute when that URL is hit.
-
-We will also fire up the server to make sure everything has been corrected correctly and that there are no syntax errors.
-
-### Instructions
-
-* Open `server/index.js`.
-* Require the books controller under the router in a variable called `bc`.
-* Above `port` create four routes on `app`:
-  * `post` - `/api/books`, `bc.create`.
-  * `get` - `/api/books`, `bc.read`.
-  * `put` - `/api/books/:id`, `bc.update`.
-  * `delete` - `/api/books/:id`, `bc.delete`
-* Run `nodemon` or `node index.js` when in the `server/` directory.
-
-### Solution
 
 <details>
 
@@ -195,27 +180,266 @@ We will also fire up the server to make sure everything has been corrected corre
 ```js
 const express = require('express');
 const bodyParser = require('body-parser');
-const bc = require(__dirname + '/controllers/books_controller.js');
+const bc = require('./controllers/books_controller.js');
 
 const app = express();
 
 app.use( bodyParser.json() );
 
-const baseURL = "/api/books";
-app.post(baseURL, bc.create);
-app.get(baseURL, bc.read);
-app.put(`${baseURL}/:id`, bc.update);
-app.delete(`${baseURL}/:id`, bc.delete);
+app.get('/api/books', bc.read);
 
 const port = 3000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
-
 </details>
 
-<img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/3g.gif" />
 
 ## Step 7
+
+### Summary
+
+In this step, we will create the endpoint to `post` a new book. We will also create the method in the `books_controller` to be used as the endpoint's handler function.
+
+### Instructions
+
+* Open `server/index.js`.
+* Below the `get` endpoint, add a `post` endpoint.
+  * The URL path should be `/api/books`.
+  * The handler function will come from the `books_controller`, we will add it once we create it.
+* Open `server/controllers/books_controller.js`.
+* Create a method called `create` in the `module.exports` object.
+  * This method should add a new book from the request body to the `books` array.
+  * When finished, it should return all the books.
+  * Keep in mind, the information you'll be getting from the request body are `title` and `author`. You'll have to add your own id property with the value coming from the `id` variable. Don't forget to increment the `id` variable when you're done.
+* Return to the `post` endpoint in `server/index.js` that we just wrote and add the `create` method as the second argument after the URL path.
+
+### Solution
+
+<details>
+
+<summary> <code> server/controller/books_controller.js </code> </summary>
+
+```js
+let books = [];
+let id = 0;
+
+module.exports = {
+  read: ( req, res ) => {
+    res.status(200).send( books );
+  },
+  create: ( req, res ) => {
+    const { title, author } = req.body;
+    let book = {
+      id: id,
+      title: title,
+      author: author
+    }
+    books.push( book );
+    id++;
+    res.status(200).send( books );
+  }
+};
+```
+</details>
+
+<details>
+
+<summary> <code> server/index.js </code> </summary>
+
+```js
+const express = require('express');
+const bodyParser = require('body-parser');
+const bc = require('./controllers/books_controller.js');
+
+const app = express();
+
+app.use( bodyParser.json() );
+
+app.get('/api/books', bc.read);
+app.post('/api/books', bc.create);
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+```
+</details>
+
+
+## Step 8
+
+### Summary
+
+In this step, we will create a `put` endpoint to update a specific book by it's id. We will also create the method in the `books_controller` to be used as the endpoint's handler function.
+
+### Instructions
+
+* Open `server/index.js`.
+* Below the `post` endpoint, add a `put` endpoint.
+  * You will be using the `params` object in this endpoint, specifically an id you'll get from the URL parameters. Make sure to indicate this at the end of the URL path `/api/books`.
+  * The handler function will come from the `books_controller`, we will add it once we create it.
+* Open `server/controllers/books_controller.js`.
+* Create a method called `update` in the `module.exports` object.
+  * This method should find a specific book based off of an id that you'll get off of the `params` object.
+  * Once the book is found, update the book with the new information you'll get off of the request body.
+  * Return all the books.
+* Return to the `put` endpoint in `server/index.js` that we just wrote and add the `update` method as the second argument after the URL path.
+
+### Solution
+
+<details>
+
+<summary> <code> server/controller/books_controller.js </code> </summary>
+
+```js
+let books = [];
+let id = 0;
+
+module.exports = {
+  read: ( req, res ) => {
+    res.status(200).send( books );
+  },
+  create: ( req, res ) => {
+    const { title, author } = req.body;
+    let book = {
+      id: id,
+      title: title,
+      author: author
+    }
+    books.push( book );
+    id++;
+    res.status(200).send( books );
+  },
+  update: ( req, res ) => {
+    let index = null;
+    books.forEach((book, i) => {
+      if(book.id === Number(req.params.id)) index = i;
+    })
+    books[ index ] = {
+      id: books[ index ].id,
+      title: req.body.title || books[ index ].title,
+      author: req.body.author || books[ index ].author
+    };
+    res.status(200).send( books );
+  }
+};
+```
+</details>
+
+<details>
+
+<summary> <code> server/index.js </code> </summary>
+
+```js
+const express = require('express');
+const bodyParser = require('body-parser');
+const bc = require('./controllers/books_controller.js');
+
+const app = express();
+
+app.use( bodyParser.json() );
+
+app.get('/api/books', bc.read);
+app.post('/api/books', bc.create);
+app.put('/api/books/:id', bc.update);
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+```
+</details>
+
+
+## Step 9
+
+### Summary
+
+In this step, we will create a `delete` endpoint to delete a specific book by it's id. We will also create the method in the `books_controller` to be used as the endpoint's handler function.
+
+### Instructions
+
+* Open `server/index.js`.
+* Below the `put` endpoint, add a `delete` endpoint.
+  * You will be using the `params` object in this endpoint, specifically an id you'll get from the URL parameters. Make sure to indicate this at the end of the URL path `/api/books`.
+  * The handler function will come from the `books_controller`, we will add it once we create it.
+* Open `server/controllers/books_controller.js`.
+* Create a method called `delete` in the `module.exports` object.
+  * This method should find a specific book based off of an id that you'll get off of the `params` object.
+  * Once the book is found, remove that book from the `books` array.
+  * Return all the books.
+* Return to the `delete` endpoint in `server/index.js` that we just wrote and add the `delete` method as the second argument after the URL path.
+
+### Solution
+
+<details>
+
+<summary> <code> server/controller/books_controller.js </code> </summary>
+
+```js
+let books = [];
+let id = 0;
+
+module.exports = {
+  read: ( req, res ) => {
+    res.status(200).send( books );
+  },
+  create: ( req, res ) => {
+    const { title, author } = req.body;
+    let book = {
+      id: id,
+      title: title,
+      author: author
+    }
+    books.push( book );
+    id++;
+    res.status(200).send( books );
+  },
+  update: ( req, res ) => {
+    let index = null;
+    books.forEach((book, i) => {
+      if(book.id === Number(req.params.id)) index = i;
+    })
+    books[ index ] = {
+      id: books[ index ].id,
+      title: req.body.title || books[ index ].title,
+      author: req.body.author || books[ index ].author
+    };
+    res.status(200).send( books );
+  },
+  delete: ( req, res ) => {
+    let index = null;
+    books.forEach((book, i) => {
+      if(book.id === Number(req.params.id)) index = i;
+    })
+    books.splice(index, 1)
+    res.status(200).send( books );
+  }
+};
+```
+</details>
+
+<details>
+
+<summary> <code> server/index.js </code> </summary>
+
+```js
+const express = require('express');
+const bodyParser = require('body-parser');
+const bc = require('./controllers/books_controller.js');
+
+const app = express();
+
+app.use( bodyParser.json() );
+
+app.get('/api/books', bc.read);
+app.post('/api/books', bc.create);
+app.put('/api/books/:id', bc.update);
+app.delete('/api/books/:id', bc.delete)
+
+const port = 3000;
+app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
+```
+</details>
+
+
+## Step 10
 
 ### Summary
 
@@ -223,26 +447,27 @@ In this step, we will use Postman Unit Tests to test our endpoints.
 
 ### Instructions
 
-* Restart the API.
+* Start up (or restart) your server.
 * Open Postman.
 * Click on the `Import` button and then click on `Choose Files`.
 * Select the `postman_collection` file from the root of the project.
 * Click on the arrow next to the `node_introduction` collection and click on `Run`.
 * In the new Postman window make sure `node_introduction` is highlighted in orange and then press `Start Test`.
+  * It's important to know that if you try to run the tests again, you must restart your server first or your tests will fail.
 
 ### Solution
 
 <img src="https://github.com/DevMountain/node-1-mini/blob/solution/readme-assets/4g.gif" />
 
-## Step 8
+## Step 11
 
 ### Summary
 
-In this step, we will use `express.static` to serve up our `index.html` file. `express.static` takes an argument that is the folder location you want to serve when the server URL is hit in a browser. Our front-end was made using `create-react-app` which has a production ready build. We'll want to server the entire `public/build` folder.
+In this step, we will use `express.static` to serve up our `index.html` file. `express.static` takes an argument that is the location of the folder with the files you want to serve when the server URL is hit in a browser. Our front-end was made using `create-react-app` and instead of running it's own server, we have made a production ready build so that our server can serve up our frontend. We'll want to serve the entire `build` folder. 
 
 ### Instructions
 
-* Call the `use` method on app and pass in `express.static( __dirname + '/../public/build')`.
+* Call the `use` method on app and pass in `express.static( __dirname + '/../build')`.
 * Add some books to your collection using Postman.
 * Open up `http://localhost:3000` in your browser.
 
@@ -255,18 +480,17 @@ In this step, we will use `express.static` to serve up our `index.html` file. `e
 ```js
 const express = require('express');
 const bodyParser = require('body-parser');
-const bc = require( __dirname + '/controllers/books_controller');
+const bc = require('./controllers/books_controller.js');
 
 const app = express();
 
 app.use( bodyParser.json() );
-app.use( express.static( __dirname + "/../public/build") );
+app.use( express.static( __dirname + "/../build") );
 
-const baseURL = "/api/books";
-app.post(baseURL, bc.create);
-app.get(baseURL, bc.read);
-app.put(`${baseURL}/:id`, bc.update);
-app.delete(`${baseURL}/:id`, bc.delete);
+app.get('/api/books', bc.read);
+app.post('/api/books', bc.create);
+app.put('/api/books/:id', bc.update);
+app.delete('/api/books/:id', bc.delete)
 
 const port = 3000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
