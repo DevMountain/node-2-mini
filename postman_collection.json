@@ -1,0 +1,494 @@
+{
+	"info": {
+		"_postman_id": "548d4d10-03b7-41d9-bcf5-37ab2c508eb5",
+		"name": "node_introduction copy",
+		"description": "node_introduction Unit Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST: /api/books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b6c06fc-8b65-4ac4-af25-7579ddff39b6",
+						"type": "text/javascript",
+						"exec": [
+							"let isJSON = true;",
+							"let books = [];",
+							"try {",
+							"    books = pm.response.json();",
+							"} catch(err) {",
+							"    isJSON = false;",
+							"}",
+							"",
+							"pm.test(`POST to /api/books/ should return JSON`, () => {",
+							"    pm.expect(isJSON).to.be.true;",
+							"});",
+							"",
+							"pm.test('POST to /api/books should respond with a 200, 201, or 202 status code', () => {",
+							"    pm.expect(pm.response.code).to.be.oneOf( [200, 201, 202] )",
+							"});",
+							"",
+							"pm.test('POST to /api/books should respond with an array that contains the book sent in the request body', () => {",
+							"    let postTitle = pm.environment.get(\"postTitle\");",
+							"    let postAuthor = pm.environment.get(\"postAuthor\");",
+							"    const index = books.findIndex( book => {",
+							"        // console.log(book.title, book.author, book1title, book1author)",
+							"        return book.title === postTitle && book.author === postAuthor;",
+							"    })",
+							"    pm.expect(index).to.not.equal(-1);",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "65d982d5-b614-4808-ba9f-d36ce72ca734",
+						"type": "text/javascript",
+						"exec": [
+							"let book0title = 'title' + Math.floor( Math.random() * 1000);",
+							"let book0author = 'author' + Math.floor( Math.random() * 1000);",
+							"",
+							"pm.environment.set(\"postTitle\", book0title);",
+							"pm.environment.set(\"postAuthor\", book0author);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"{{postTitle}}\",\n\t\"author\": \"{{postAuthor}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET: /api/books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "45e15d0a-01cf-4de6-ba4d-260570b806e0",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('GET to /api/books can only be tested properly if POST endpoint doesn\\'t have errors. No errors reported in pre-test POST request.', () => {",
+							"    let postError1 = pm.environment.get(\"getpreposterr1\");",
+							"    let postError2 = pm.environment.get(\"getpreposterr2\");",
+							"    let isErr = postError1 || postError2;",
+							"    pm.environment.unset(\"getpreposterr\");",
+							"    pm.expect(isErr).to.be.false;",
+							"})",
+							" ",
+							"",
+							"pm.test('GET to /api/books should respond with a 200 status code', () => {",
+							"    pm.expect(pm.response.code).to.eql(200);",
+							"})",
+							"",
+							"pm.test('GET to /api/books should return an array with at least two books with defined book and author properties.', () => {",
+							"    const res = pm.response.json();",
+							"    const length = res.length;",
+							"    const isArray = Array.isArray(res);",
+							"    const item1book = res[0] ? res[0].title : null;",
+							"    const item1author = res[0] ? res[0].author : null;",
+							"    const item2book = res[1] ? res[1].title : null;",
+							"    const item2author = res[1] ? res[1].author : null;",
+							"    const item1vals = item1book && item1author ? true : false;",
+							"    const item2vals = item2book && item2author ? true : false;",
+							"    pm.expect(item1vals).to.be.true;",
+							"    pm.expect(item2vals).to.be.true;",
+							"    pm.expect(isArray).to.be.true;",
+							"    pm.expect(res.length >= 2).to.be.true;",
+							"})",
+							"",
+							"pm.test('GET to /api/books should return an array with at least two books and no duplicate IDs', () => {",
+							"    const response = pm.response.json();",
+							"    const length = response.length;",
+							"    let uniqArr = [];",
+							"    let duplicatesExist = false;",
+							"    response.forEach( book => {",
+							"        if(uniqArr.includes(book.id)) {",
+							"            console.log(uniqArr, book.id)",
+							"            duplicatesExist = true;",
+							"        } else {",
+							"            uniqArr.push(book.id);",
+							"        }",
+							"    })",
+							"    pm.expect(duplicatesExist).to.be.false;",
+							"    pm.expect(response.length >= 2).to.be.true",
+							"})",
+							"",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7314a215-3f63-4dad-a561-f344e9584d5f",
+						"type": "text/javascript",
+						"exec": [
+							"const postRequest1 = {",
+							"  url: 'http://localhost:4000/api/books',",
+							"  method: 'POST',",
+							"  header: {",
+							"        'content-type': 'application/json'",
+							"  },",
+							"  body: {",
+							"    mode: 'raw',",
+							"    raw: JSON.stringify({ title: \"Book 3\", author: \"Author 3\"})",
+							"  }",
+							"};",
+							"",
+							"const postRequest2 = {",
+							"  url: 'http://localhost:4000/api/books',",
+							"  method: 'POST',",
+							"  header: {",
+							"        'content-type': 'application/json'",
+							"  },",
+							"  body: {",
+							"    mode: 'raw',",
+							"    raw: JSON.stringify({ title: \"Book 4\", author: \"Author 4\"})",
+							"  }",
+							"};",
+							"",
+							"pm.sendRequest(postRequest1, (err, data) => {",
+							"    console.log({err, data});",
+							"    let goodCodes = [200, 201, 202];",
+							"    let badResponse = !goodCodes.includes(data.code);",
+							"    if(err || badResponse) {",
+							"        console.log('efff')",
+							"        postErr = true;",
+							"        pm.environment.set(\"getpreposterr1\", true);",
+							"    } else {",
+							"        pm.environment.set(\"getpreposterr1\", false);",
+							"    }",
+							"});",
+							"",
+							"pm.sendRequest(postRequest2, (err, data) => {",
+							"    let goodCodes = [200, 201, 202];",
+							"    let badResponse = !goodCodes.includes(data.code);",
+							"    if(err || badResponse) {",
+							"        console.log('efff')",
+							"        postErr = true;",
+							"        pm.environment.set(\"getpreposterr2\", true);",
+							"    } else {",
+							"        pm.environment.set(\"getpreposterr2\", false);",
+							"    }",
+							"});",
+							"",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT: /api/books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a40ddc50-b33b-4115-bc00-a0c8b32329a5",
+						"type": "text/javascript",
+						"exec": [
+							"let isJSON = true;",
+							"let books = [];",
+							"try {",
+							"    books = pm.response.json();",
+							"} catch(err) {",
+							"    isJSON = false;",
+							"}",
+							"",
+							"let targetId = pm.environment.get(\"putid\");",
+							"let foundBook = books.find( book => book.id === +targetId);",
+							"let title = foundBook ? foundBook.title : 'Error';",
+							"let author = foundBook ? foundBook.author : 'Error';",
+							"",
+							"",
+							"",
+							"pm.test(`PUT to /api/books/${targetId} should return JSON`, () => {",
+							"    pm.expect(isJSON).to.be.true;",
+							"})",
+							"",
+							"pm.test(`PUT to /api/books/${targetId} should return status 200, 201, or 202`, () => {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202])",
+							"})",
+							"",
+							"pm.test(`PUT to /api/books/${targetId} should update the title of the book with the ID of ${targetId}`, () => {",
+							"    pm.expect( title ).to.eql( \"Updated Book\" )",
+							"    pm.expect(targetId).to.not.equal(undefined)",
+							"})",
+							"",
+							"pm.test(`PUT to /api/books/${targetId} should update the author of the book with the ID of ${targetId}`, () => {",
+							"    pm.expect( author ).to.eql( \"Updated Author\" )",
+							"    pm.expect(targetId).to.not.equal(undefined)",
+							"})",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9d1ca18f-cccb-43b4-af23-c2d5dfa2cff7",
+						"type": "text/javascript",
+						"exec": [
+							"const postRequest = {",
+							"  url: 'http://localhost:4000/api/books',",
+							"  method: 'POST',",
+							"  header: {",
+							"        'content-type': 'application/json'",
+							"  },",
+							"  body: {",
+							"    mode: 'raw',",
+							"    raw: JSON.stringify({ title: \"Book 4\", author: \"Author 4\"})",
+							"  }",
+							"};",
+							"",
+							"pm.sendRequest(postRequest, function(err, response) {",
+							"    const startResponse = response.json();",
+							"    let testBook = startResponse.find( book => book.title !== 'Updated Book' && book.author !== 'Updated Author');",
+							"    console.log(startResponse, testBook);",
+							"    let {id, author, title } = testBook;",
+							"    ",
+							"    pm.environment.set(\"putid\", id);",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Updated Book\",\n\t\"author\": \"Updated Author\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/books/{{putid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"books",
+						"{{putid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE: /api/books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "374c191c-f984-4fc6-90d8-719b512e7741",
+						"type": "text/javascript",
+						"exec": [
+							"const targetId =  pm.environment.get(\"deleteid\");",
+							"let isJSON = true;",
+							"let books = [];",
+							"try {",
+							"    books = pm.response.json();",
+							"} catch(err) {",
+							"    isJSON = false;",
+							"}",
+							"",
+							"pm.test(`DELETE to /api/books/${targetId} should return JSON`, () => {",
+							"    pm.expect(isJSON).to.be.true;",
+							"})",
+							"",
+							"pm.test(`DELETE to /api/books/${targetId} should return a status code of 200`, () => {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"",
+							"pm.test(`DELETE to /api/books/${targetId} should respond with an array that does not include a book with an id of ${targetId}`, () => {",
+							"    const index = books.findIndex( book => book.id === +targetId )",
+							"    pm.expect(targetId).to.not.equal(undefined)",
+							"    pm.expect(index).to.eql(-1)",
+							"})"
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f92ecb7b-d56f-4282-badb-c4adfb87fae8",
+						"type": "text/javascript",
+						"exec": [
+							"const postRequest = {",
+							"  url: 'http://localhost:4000/api/books',",
+							"  method: 'POST',",
+							"  header: {",
+							"        'content-type': 'application/json'",
+							"  },",
+							"  body: {",
+							"    mode: 'raw',",
+							"    raw: JSON.stringify({ title: \"Book 4\", author: \"Author 4\"})",
+							"  }",
+							"};",
+							"",
+							"pm.sendRequest(postRequest, function (err, response) {",
+							"   const startResponse = response.json();",
+							"   const randomIndex = Math.floor(Math.random() * startResponse.length)",
+							"   const randomId = startResponse[randomIndex].id;",
+							"   pm.environment.set(\"deleteid\", randomId);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/books/{{deleteid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"books",
+						"{{deleteid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5b8b81e8-b04c-4cba-8d8d-56143fcb70c0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5867e2b5-19bf-406c-9862-7707c455deae",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ffa184f0-47e0-4aeb-92c6-59997cb98f2d",
+			"key": "putid",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"id": "4eb8f46f-ea78-4c0c-bd0b-894b49c73905",
+			"key": "getpreposterr",
+			"value": "false",
+			"type": "string"
+		},
+		{
+			"id": "11851db0-0592-4aa8-ba8a-5b0e60b48536",
+			"key": "book0title",
+			"value": "comeon",
+			"type": "string"
+		},
+		{
+			"id": "00170a70-0780-42be-90a7-60b5a0923e2f",
+			"key": "book0author",
+			"value": "pleasework",
+			"type": "string"
+		},
+		{
+			"id": "0839c63f-a7e1-413a-8589-2fd351cebf94",
+			"key": "deleteid",
+			"value": "0",
+			"type": "string"
+		}
+	]
+}

@@ -60,7 +60,7 @@ node_modules
 
 ## Step 4
 
-In this step, we will create our server and have it listen on port `3000`.
+In this step, we will create our server and have it listen on port `4000`.
 
 ### Instructions
 
@@ -70,7 +70,7 @@ In this step, we will create our server and have it listen on port `3000`.
 * Require `express` in a variable called `express` and require `body-parser` in a variable called `bodyParser`.
 * Create a variable called `app` that equals `express` invoked. 
 * Call the `use` method on app and pass in `bodyParser`'s `json` method invoked.
-* Call the `listen` method on app. The app should listen on port 3000:
+* Call the `listen` method on app. The app should listen on port 4000:
   * The first parameter of `listen` is the port number.
   * The second parameter of `listen` is a function that is called when the app starts listening.
 
@@ -88,7 +88,7 @@ const app = express();
 
 app.use( bodyParser.json() );
 
-const port = 3000;
+const port = 4000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
 
@@ -188,7 +188,7 @@ app.use( bodyParser.json() );
 
 app.get('/api/books', bc.read);
 
-const port = 3000;
+const port = 4000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
 </details>
@@ -258,7 +258,7 @@ app.use( bodyParser.json() );
 app.get('/api/books', bc.read);
 app.post('/api/books', bc.create);
 
-const port = 3000;
+const port = 4000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
 </details>
@@ -341,7 +341,7 @@ app.get('/api/books', bc.read);
 app.post('/api/books', bc.create);
 app.put('/api/books/:id', bc.update);
 
-const port = 3000;
+const port = 4000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
 </details>
@@ -433,7 +433,7 @@ app.post('/api/books', bc.create);
 app.put('/api/books/:id', bc.update);
 app.delete('/api/books/:id', bc.delete)
 
-const port = 3000;
+const port = 4000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
 </details>
@@ -450,7 +450,7 @@ In this step, we will use Postman Unit Tests to test our endpoints.
 * Start up (or restart) your server.
 * Open Postman.
 * Click on the `Import` button and then click on `Choose Files`.
-* Select the `postman_collection` file from the root of the project.
+* Select the `postman_collection.json` file from the root of the project.
 * Click on the arrow next to the `node_introduction` collection and click on `Run`.
 * In the new Postman window make sure `node_introduction` is highlighted in orange and then press `Start Test`.
   * It's important to know that if you try to run the tests again, you must restart your server first or your tests will fail.
@@ -469,7 +469,7 @@ In this step, we will use `express.static` to serve up our `index.html` file. `e
 
 * Call the `use` method on app and pass in `express.static( __dirname + '/../build')`.
 * Add some books to your collection using Postman.
-* Open up `http://localhost:3000` in your browser.
+* Open up `http://localhost:4000` in your browser.
 
 ### Solution
 
@@ -492,7 +492,7 @@ app.post('/api/books', bc.create);
 app.put('/api/books/:id', bc.update);
 app.delete('/api/books/:id', bc.delete)
 
-const port = 3000;
+const port = 4000;
 app.listen( port, () => { console.log(`Server listening on port ${port}`); } );
 ```
 
