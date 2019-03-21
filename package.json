@@ -8,17 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devlemire/node-introduction.git"
+    "url": "git+https://github.com/DevMountain/node-2-mini.git"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/devlemire/node-introduction/issues"
+    "url": "https://github.com/DevMountain/node-2-mini/issues"
   },
-  "homepage": "https://github.com/devlemire/node-introduction#readme",
+  "homepage": "https://github.com/DevMountain/node-2-mini#readme",
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "express": "^4.15.3"
+    "express": "^4.16.4"
   }
 }
